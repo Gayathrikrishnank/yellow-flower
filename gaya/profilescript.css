@@ -1,0 +1,40 @@
+if(localStorage.getItem('userProfile')) {
+    // Retrieve user data from localStorage
+    var userProfile = JSON.parse(localStorage.getItem('userProfile'));
+    
+    // Display user profile
+    document.getElementById('profile-picture').src = userProfile.profilePicture;
+    document.getElementById('username').innerText = userProfile.username;
+    document.getElementById('email').innerText = userProfile.email;
+    document.getElementById('bio').innerText = userProfile.bio;
+} else {
+    // Redirect to sign up page if user data doesn't exist
+    window.location.href = 'signup.html';
+}
+
+document.getElementById('edit-profile-btn').addEventListener('click', function() {
+    document.getElementById('edit-profile-form').style.display = 'block';
+});
+
+document.getElementById('profile-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Get new profile information
+    var newUsername = document.getElementById('new-username').value;
+    var newEmail = document.getElementById('new-email').value;
+    var newBio = document.getElementById('new-bio').value;
+    
+    // Update user profile
+    document.getElementById('username').innerText = newUsername;
+    document.getElementById('email').innerText = newEmail;
+    document.getElementById('bio').innerText = newBio;
+    
+    // Update user data in localStorage
+    userProfile.username = newUsername;
+    userProfile.email = newEmail;
+    userProfile.bio = newBio;
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    
+    // Hide edit profile form
+    document.getElementById('edit-profile-form').style.display = 'none';
+});
